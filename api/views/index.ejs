@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/index.css" />
+    <title>Interface de Usuário</title>
+  </head>
+
+  <body>
+    <header>
+      <h1><%= titulo%></h1>
+    </header>
+    <main>
+      <div>
+        <form action="/funcionario/create" method="POST">
+          <label for="nomeCompleto">Nome:</label>
+          <input
+            name="nomeCompleto"
+            id="nomeCompleto"
+            placeholder="Digite seu nome"
+            required
+          />
+
+          <label for="dataAdmissao">Data de admissão:</label>
+          <input type="date" name="dataAdmissao" id="dataAdmissao" />
+
+          <label for="salario">Salário:</label>
+          <input
+            type="number"
+            name="salario"
+            id="salario"
+            placeholder="Digite o salário"
+          />
+
+          <label for="dataPagto">Data Pagamento:</label>
+          <input type="date" name="dataPagto" id="dataPagto" />
+
+          <label for="desempenho">Desempenho:</label>
+          <input
+            type="number"
+            name="desempenho"
+            id="desempenho"
+            placeholder="Digite o desempenho"
+          />
+
+          <input type="submit" value="Novo" />
+        </form>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>Nome</td>
+            <td>Data Adimissão</td>
+            <td>Salário</td>
+            <td>Data Pagamento</td>
+            <td>Desempenho</td>
+            <td>Bonificacao</td>
+            <td>Excluir</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% dados.forEach(t=>{%>
+          <tr>
+            <td><%=t.matricula%></td>
+            <td><%=t.nome_completo%></td>
+            <td>
+              <%=t.data_admissao.toISOString().slice(0, 16).replace(' T',' ')%>
+            </td>
+            <td><%=t.salario%></td>
+            <td>
+              <%=t.data_pagto.toISOString().slice(0, 16).replace(' T',' ')%>
+            </td>
+            <td><%=t.desempenho%></td>
+            <td><%=t.bonificacao%></td>
+
+            <td>
+              <form
+                action="/funcionario/<%=t.matricula%>?_method=DELETE"
+                method="POST"
+              >
+                <input type="submit" value="[ - ]" />
+              </form>
+            </td>
+          </tr>
+          <% })%>
+        </tbody>
+      </table>
+    </main>
+    <footer></footer>
+  </body>
+</html>
